@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dripdz - Home</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <div class="loading">
+        <img src="assets/img/loading.gif" alt="" class="loading-img">
+    </div>
+    <video src="assets/video/video1.mov" autoplay="autoplay" loop muted playsinline></video>
+    <div class="container">
+        <header class="header">
+            <img src="assets/img/logo.png" alt="dripz" class="logo" onclick="window.location.href='/home'">
+            <div>
+                <a href="/">Welcome</a>
+                <a href="/home">Products</a>
+                <a href="/contact">Contact</a>
+            </div>
+        </header>
+        
+        <!-- Product Section -->
+        <section class="content" id="product-sections"></section>
+
+        <footer>
+            <h1 class="text">Website by <a href="https://instagram.com/q2l_0">Achraf</a></h1>
+        </footer>
+    </div>
+    
+    <script>
+        const hiddeloading = () => {
+            const loading = document.querySelector('.loading');
+            loading.classList.toggle('hidde');
+        }
+        const getProduct = async () => {
+            const res = await fetch("api/product?status=hero");
+            if (!res.ok) {
+                throw new Error(`Error: ${res.statusText}`);
+            }
+            const data = await res.json();
+            return data;
+        };
+
+        const showProduct = async () => {
+            const products = await getProduct();
+            const groupedData = products.reduce((acc, item) => {
+                const category = item.category;
+                if (!acc[category]) {
+                    acc[category] = [];
+                }
+                acc[category].push(item);
+                return acc;
+            }, {});
+
+            const productSections = document.getElementById("product-sections");
+
+            for (const [category, items] of Object.entries(groupedData)) {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.id = category.toLowerCase();
+
+                const title = document.createElement("h1");
+                title.className = "text";
+                title.textContent = `${category}:`;
+                categoryDiv.appendChild(title);
+
+                const productsContainer = document.createElement("div");
+                productsContainer.className = "products";
+                productsContainer.id = category.toLowerCase();
+
+                items.forEach((item) => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.onclick = () => {
+                        window.location.href = `/product/${item._id}`;
+                    };
+
+                    const box = document.createElement("div");
+                    box.className = "box";
+
+                    item.image.forEach((imgSrc) => {
+                        const img = document.createElement("img");
+                        img.src = `assets/img/${imgSrc}`;
+                        img.alt = item.name;
+                        img.className = "product-image"; // Optional: for styling
+                        box.appendChild(img);
+                    });
+                    card.appendChild(box);
+
+                    const name = document.createElement("h1");
+                    name.className = "name";
+                    name.textContent = item.name;
+                    card.appendChild(name);
+
+                    const price = document.createElement("h4");
+                    price.className = "price";
+                    price.textContent = `${item.price} DA`;
+                    card.appendChild(price);
+
+                    productsContainer.appendChild(card);
+                });
+
+                categoryDiv.appendChild(productsContainer);
+                productSections.appendChild(categoryDiv);
+
+            }
+            hiddeloading()
+        };
+        
+        document.addEventListener("DOMContentLoaded", showProduct);
+        
+    </script>
+</body>
+</html>

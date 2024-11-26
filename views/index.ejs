@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dripdz - Welcome</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        *{
+            margin: 0;
+            box-sizing: border-box;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        h1{
+            z-index: 2;
+            user-select: none;
+            font-family: sans-serif;
+            color: rgb(133, 133, 133);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <video src="assets/video/video1.mov" muted autoplay loop slower></video>
+    <h1 onclick="window.location.href='home'">[ENTER]</h1>
+    <script>
+        window.addEventListener('load', () => {
+            const loading = document.querySelector('.loading');
+            loading.classList.toggle('hidde');
+        })
+    </script>
+</body>
+</html>

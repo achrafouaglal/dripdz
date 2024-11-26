@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dripdz</title>
+    <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+    <div class="loading">
+        <img src="../assets/img/loading.gif" alt="" class="loading-img">
+    </div>
+    <video src="../assets/video/video1.mov" autoplay="autoplay" loop muted playsinline></video>
+    <div class="container">
+        <header class="header">
+            <img src="../assets/img/logo.png" alt="dripz" class="logo" onclick="window.location.href='../home'">
+            <div>
+                <a href="/">Welcome</a>
+                <a href="/home">Products</a>
+                <a href="/contact">Contact</a>
+            </div>
+        </header>
+        <div class="product-view">
+            <div class="product">
+            </div>
+            <div class="detail">
+                <div class="overview">
+                </div>
+                <h1 class="text">For order :</h1>
+                <form action="../api/order" method="post" class="order">
+                    <input type="hidden" name="product" value="" id="product-name">
+                    <input type="hidden" name="productid" value="" id="product-id">
+
+                    
+
+                    
+                    <input type="hidden" name="price" value="" id="product-price">
+
+                    <input name='name' type="text" placeholder="Enter Full Name">
+                    <input name='number' type="number" placeholder="Enter Your Number">
+                    <input name='instagram' type="text" placeholder="Enter Instagram">
+                    <select name="size" id="size">
+                    </select>
+                    
+                    <select name="color" id="color">
+                    </select>
+                    <select name="city" id="">
+                        <option value="Adrar">01 - Adrar</option>
+                        <option value="Chlef">02 - Chlef</option>
+                        <option value="Laghouat">03 - Laghouat</option>
+                        <option value="Oum el Bouaghi">04 - Oum el Bouaghi</option>
+                        <option value="Batna">05 - Batna</option>
+                        <option value="Béjaïa">06 - Béjaïa</option>
+                        <option value="Biskra">07 - Biskra</option>
+                        <option value="Béchar">08 - Béchar</option>
+                        <option value="Blida">09 - Blida</option>
+                        <option value="Bouira">10 - Bouira</option>
+                        <option value="Tamanrasset">11 - Tamanrasset</option>
+                        <option value="Tébessa">12 - Tébessa</option>
+                        <option value="Tlemcen">13 - Tlemcen</option>
+                        <option value="Tiaret">14 - Tiaret</option>
+                        <option value="Tizi Ouzou">15 - Tizi Ouzou</option>
+                        <option value="Alger" selected>16 - Alger</option>
+                        <option value="Djelfa">17 - Djelfa</option>
+                        <option value="Jijel">18 - Jijel</option>
+                        <option value="Sétif">19 - Sétif</option>
+                        <option value="Saïda">20 - Saïda</option>
+                        <option value="Skikda">21 - Skikda</option>
+                        <option value="Sidi Bel Abbès">22 - Sidi Bel Abbès</option>
+                        <option value="Annaba">23 - Annaba</option>
+                        <option value="Guelma">24 - Guelma</option>
+                        <option value="Constantine">25 - Constantine</option>
+                        <option value="Médéa">26 - Médéa</option>
+                        <option value="Mostaganem">27 - Mostaganem</option>
+                        <option value="M'sila">28 - M'sila</option>
+                        <option value="Mascara">29 - Mascara</option>
+                        <option value="Ouargla">30 - Ouargla</option>
+                        <option value="Oran">31 - Oran</option>
+                        <option value="El Bayadh">32 - El Bayadh</option>
+                        <option value="Illizi">33 - Illizi</option>
+                        <option value="Bordj Bou Arréridj">34 - Bordj Bou Arréridj</option>
+                        <option value="Boumerdès">35 - Boumerdès</option>
+                        <option value="El Tarf">36 - El Tarf</option>
+                        <option value="Tindouf">37 - Tindouf</option>
+                        <option value="Tissemsilt">38 - Tissemsilt</option>
+                        <option value="El Oued">39 - El Oued</option>
+                        <option value="Khenchela">40 - Khenchela</option>
+                        <option value="Souk Ahras">41 - Souk Ahras</option>
+                        <option value="Tipaza">42 - Tipaza</option>
+                        <option value="Mila">43 - Mila</option>
+                        <option value="Aïn Defla">44 - Aïn Defla</option>
+                        <option value="Naama">45 - Naama</option>
+                        <option value="Aïn Témouchent">46 - Aïn Témouchent</option>
+                        <option value="Ghardaïa">47 - Ghardaïa</option>
+                        <option value="Relizane">48 - Relizane</option>
+                    </select>
+                    <select name="type" id="liversion">
+                        <option value="Bureau">Bureau</option>
+                        <option value="Domicile">Domicile</option>
+                    </select>
+                    <button type="submit" >Buy !!</button>
+
+                </form>
+            </div>
+        </div>
+        <footer>
+            <h1 class="text">WebSite by <a href="https://instagram.com/q2l_0">Achraf</a></h1>
+        </footer>
+    </div>
+    <script>
+        const hiddeloading = () => {
+            const loading = document.querySelector('.loading');
+            loading.classList.toggle('hidde');
+        }
+
+        const productId = "<%= id %>";
+
+        async function fetchProductData() {
+            try {
+                const response = await fetch(`/api/product/${productId}`);
+                const product = await response.json();
+                document.title += ' - ' + product.name;
+                document.querySelector('.product').innerHTML = `<img src="../assets/img/${product.image[0]}" alt="">`
+                document.querySelector(".overview").innerHTML = `<h1 class="text">${product.name}</h1><h3 class="price">${product.price} DA</h3>`
+                document.getElementById('product-name').value = product.name
+                document.getElementById('product-price').value = product.price
+                document.getElementById('product-id').value = product._id
+                
+                for(let i = 0 ; i < product.size.length; i++){
+                    document.getElementById("size").innerHTML += `<option value="${product.size[i]}">${product.size[i]}</option>`;
+                }
+                for(let i = 0 ; i < product.color.length; i++){
+                    document.getElementById("color").innerHTML += `<option value="${product.color[i]}">${product.color[i]}</option>`;
+                }
+                
+
+            } catch (error) {
+                console.error('Error fetching product data:', error);
+                loadingElement.innerHTML = '<p>Error loading product data.</p>';
+            }
+            hiddeloading()
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchProductData);
+    </script>
+</body>
+</html>
