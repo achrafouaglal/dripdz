@@ -21,7 +21,7 @@ app.set("views",path.join(__dirname,"views"))
 
 
 app.use(session({
-    secret: process.env.secret, 
+    secret: process.env.SECRET, 
     resave: false, 
     saveUninitialized: true,
     cookie: { secure: false } // set secure: true for HTTPS
