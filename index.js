@@ -5,15 +5,13 @@ const PORT = process.env.PORT || 3000;
 const mongoose = require("mongoose")
 const session = require('express-session')
 const app = express();
-const cors = require("cors")
 dotenv.config("./.env")
 
-const DB_URL = process.env.DB_URL
+const DB_URL = process.env.DB_URL;
 
 
 app.use(express.static(path.join(__dirname , "static")))
 
-app.use(cors())
 app.use(express.json());
 
 app.set("view engine", "ejs")
@@ -24,7 +22,7 @@ app.use(session({
     secret: process.env.SECRET, 
     resave: false, 
     saveUninitialized: true,
-    cookie: { secure: false } // set secure: true for HTTPS
+    cookie: { secure: false } 
 }));
 
 app.use(express.json());
