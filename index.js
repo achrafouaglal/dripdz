@@ -1,9 +1,10 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv")
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const mongoose = require("mongoose")
 const session = require('express-session')
+const cors = require("cors");
 const app = express();
 dotenv.config("./.env")
 
@@ -11,7 +12,7 @@ const DB_URL = process.env.DB_URL;
 
 
 app.use(express.static(path.join(__dirname , "static")))
-
+app.use(cors())
 app.use(express.json());
 
 app.set("view engine", "ejs")
